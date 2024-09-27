@@ -1,0 +1,78 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String    @id @default(uuid())
+  email     String    @unique
+  firstName String
+  lastName  String
+  role      String
+  password  String
+  createdAt DateTime  @default(now())
+  invoices  Invoice[]
+  userInfo  UserInfo?
+  roleModel Role      @relation(fields: [role], references: [id])
+  Ticket    Ticket[]
+}
+
+model UserInfo {
+  id           String @id @default(uuid())
+  userId       String @unique
+  businessName String
+  billingEmail String
+  address      String
+  city         String
+  country      String
+  IBAN         String
+  user         User   @relation(fields: [userId], references: [id])
+}
+
+model Client {
+  id         String      @id @default(uuid())
+  name       String
+  invoices   Invoice[]
+  clientInfo ClientInfo?
+}
+
+model ClientInfo {
+  id           String @id @default(uuid())
+  clientId     String @unique
+  address      String
+  city         String
+  country      String
+  IBAN         String
+  emailAddress String
+  client       Client @relation(fields: [clientId], references: [id])
+}
+
+model Invoice {
+  id                 Int      @id @default(autoincrement())
+  clientId           String
+  userId             String
+  serviceDescription String
+  startedAt          DateTime
+  endDate            DateTime
+  creationDate       DateTime @default(now())
+  client             Client   @relation(fields: [clientId], references: [id])
+  user               User     @relation(fields: [userId], references: [id])
+}
+
+model Role {
+  id    String @id @default(uuid())
+  name  String
+  users User[]
+}
+
+model Ticket {
+  id                 String @id
+  order              Int    @default(autoincrement())
+  problemDescription String
+  userId             String
+  user               User   @relation(fields: [userId], references: [id])
+}
