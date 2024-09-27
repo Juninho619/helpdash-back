@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { InvoiceService } from './invoice.service';
 import { CreateInvoicedto } from './dto/create.invoice.dto';
 import { GetUser } from 'src/auth';
@@ -20,6 +20,12 @@ export class InvoiceController {
 
   @Patch('/update')
   updateInvoice(@Body() dto: CreateInvoicedto, @Param('id') user: User){
-    return this.invoiceService.updateInvoice(user.id, dto)
+    return this.invoiceService.updateInvoice(dto, id)
   }
+
+  @Delete('/delete')
+  deleteInvoice(@Param('id') id: number){
+    return this.invoiceService.deleteInvoice(id)
+  }
+
 }
