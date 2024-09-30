@@ -5,6 +5,8 @@ import { AuthModule } from './auth/auth.module';
 import { TicketModule } from './ticket/ticket.module';
 import { InvoiceModule } from './invoice/invoice.module';
 import { RoleModule } from './role/role.module';
+import { UserInfoModule } from './user-info/user-info.module';
+import { ClientInfoModule } from './client-info/client-info.module';
 
 @Module({
   imports: [ ConfigModule.forRoot({
@@ -14,6 +16,8 @@ import { RoleModule } from './role/role.module';
      AuthModule,
      TicketModule,
      InvoiceModule,
-     RoleModule],
+     RoleModule,
+     UserInfoModule,
+     ClientInfoModule],
 })
 export class AppModule {}

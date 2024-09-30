@@ -10,4 +10,6 @@ export class AuthLoginDto {
   @IsString()
   @IsNotEmpty()
   password: string;
+
+  isActive: boolean
 }

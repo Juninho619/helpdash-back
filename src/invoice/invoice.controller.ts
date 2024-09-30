@@ -20,7 +20,7 @@ export class InvoiceController {
 
   @Patch('/update')
   updateInvoice(@Body() dto: CreateInvoicedto, @Param('id') user: User){
-    return this.invoiceService.updateInvoice(dto, id)
+    return this.invoiceService.updateInvoice(dto, user.id)
   }
 
   @Delete('/delete')

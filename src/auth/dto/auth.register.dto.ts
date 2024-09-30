@@ -34,18 +34,7 @@ export class AuthRegisterDto {
     description: 'Pseudo',
     example: 'Néo',
   })
-
-  @ApiProperty({
-    type: String,
-    description: 'User city',
-    example: 'Aix les bains',
-  })
-  @MinLength(1)
-  @MaxLength(70)
-  @IsNotEmpty()
-  @IsString()
-  city: string;
-
+  
   @ApiProperty({
     type: String,
     description: 'email',
