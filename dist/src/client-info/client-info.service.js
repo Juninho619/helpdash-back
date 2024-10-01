@@ -16,10 +16,10 @@ let ClientInfoService = class ClientInfoService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    async getClientInfo(client) {
+    async getClientInfo(clientId) {
         return this.prisma.clientInfo.findMany({
             where: {
-                clientId: client.id
+                clientId: clientId
             }
         });
     }

@@ -2,6 +2,7 @@ import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma.service';
 import { CreateInvoicedto } from './dto/create.invoice.dto';
 import { Client, User } from '@prisma/client';
+import { UpdateInvoiceDto } from './dto/update.invoice.dto';
 
 @Injectable()
 export class InvoiceService {
@@ -38,15 +39,15 @@ export class InvoiceService {
 
     }
 
-    async updateInvoice(id: number, dto: CreateInvoicedto){
-        const existingTicket = await this.prisma.invoice.findUnique({
+    async updateInvoice(id: string, dto: UpdateInvoiceDto){
+        const existingInvoice = await this.prisma.invoice.findFirst({
             where:{
                 id: id
             }
         })
 
-        if (!existingTicket){
-            throw new ForbiddenException('unexisting id or invoice')
+        if (!existingInvoice){
+            throw new ForbiddenException('Invoice does not exist')
         }
 
         return this.prisma.invoice.update({
@@ -56,10 +57,10 @@ export class InvoiceService {
             data:{
                 ...dto
             }
-        })
+    })   
     }
 
-    async deleteInvoice(id: number){
+    async deleteInvoice(id: string){
         const existingInvoice = await this.prisma.invoice.findUnique({
             where: {
                 id: id

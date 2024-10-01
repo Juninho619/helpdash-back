@@ -9,17 +9,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateInvoicedto = void 0;
+exports.UpdateInvoiceDto = void 0;
 const class_validator_1 = require("class-validator");
-class CreateInvoicedto {
+class UpdateInvoiceDto {
 }
-exports.CreateInvoicedto = CreateInvoicedto;
+exports.UpdateInvoiceDto = UpdateInvoiceDto;
 __decorate([
     (0, class_validator_1.IsDate)(),
     __metadata("design:type", Date)
-], CreateInvoicedto.prototype, "startedAt", void 0);
+], UpdateInvoiceDto.prototype, "startedAt", void 0);
 __decorate([
     (0, class_validator_1.IsDate)(),
     __metadata("design:type", Date)
-], CreateInvoicedto.prototype, "endDate", void 0);
-//# sourceMappingURL=create.invoice.dto.js.map
+], UpdateInvoiceDto.prototype, "endDate", void 0);
+//# sourceMappingURL=update.invoice.dto.js.map

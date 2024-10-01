@@ -43,7 +43,7 @@ let InvoiceService = class InvoiceService {
             }
         });
     }
-    async updateInvoice(id, dto) {
+    async updateInvoice(dto, id) {
         const existingTicket = await this.prisma.invoice.findUnique({
             where: {
                 id: id

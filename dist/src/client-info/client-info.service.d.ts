@@ -1,10 +1,10 @@
-import { Client } from '@prisma/client';
 import { PrismaService } from 'prisma/prisma.service';
 import { FillInfoClientDto } from './dto/fill.info.client.dto';
+import { UpdateInfoClientDto } from './dto/update.info.client.dto';
 export declare class ClientInfoService {
     private prisma;
     constructor(prisma: PrismaService);
-    getClientInfo(client: Client): Promise<{
+    getClientInfo(clientId: string): Promise<{
         id: string;
         clientId: string;
         IBAN: string;
@@ -22,7 +22,7 @@ export declare class ClientInfoService {
         country: string;
         emailAddress: string;
     }>;
-    updateClientInfo(clientId: string, dto: FillInfoClientDto): Promise<{
+    updateClientInfo(clientId: string, dto: UpdateInfoClientDto): Promise<{
         id: string;
         clientId: string;
         IBAN: string;

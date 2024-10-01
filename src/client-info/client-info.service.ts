@@ -2,6 +2,7 @@ import { ForbiddenException, Injectable } from '@nestjs/common';
 import { Client, ClientInfo, User } from '@prisma/client';
 import { PrismaService } from 'prisma/prisma.service';
 import { FillInfoClientDto } from './dto/fill.info.client.dto';
+import { UpdateInfoClientDto } from './dto/update.info.client.dto';
 
 @Injectable()
 export class ClientInfoService {
@@ -29,7 +30,7 @@ export class ClientInfoService {
         })
     }
 
-    async updateClientInfo(clientId: string, dto: FillInfoClientDto){
+    async updateClientInfo(clientId: string, dto: UpdateInfoClientDto){
         const existingClientId = await this.prisma.clientInfo.findFirst({
             where:{
                 clientId: clientId

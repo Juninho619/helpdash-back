@@ -3,6 +3,7 @@ import { InvoiceService } from './invoice.service';
 import { CreateInvoicedto } from './dto/create.invoice.dto';
 import { GetUser } from 'src/auth';
 import { Client, User } from '@prisma/client';
+import { UpdateInvoiceDto } from './dto/update.invoice.dto';
 
 @Controller('invoice')
 export class InvoiceController {
@@ -18,13 +19,14 @@ export class InvoiceController {
     return this.invoiceService.createInvoice(dto, user, client)
   }
 
+  // Update endpoint
   @Patch('/update')
-  updateInvoice(@Body() dto: CreateInvoicedto, @Param('id') user: User){
-    return this.invoiceService.updateInvoice(dto, user.id)
+  updateInvoice(@Param('id') id:string, @Body()dto: UpdateInvoiceDto){
+    return this.invoiceService.updateInvoice(id, dto)
   }
 
   @Delete('/delete')
-  deleteInvoice(@Param('id') id: number){
+  deleteInvoice(@Param('id') id: string){
     return this.invoiceService.deleteInvoice(id)
   }
 

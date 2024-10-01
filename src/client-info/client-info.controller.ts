@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { ClientInfoService } from './client-info.service';
 import { FillInfoClientDto } from './dto/fill.info.client.dto';
+import { UpdateInfoClientDto } from './dto/update.info.client.dto';
 
 @Controller('client-info')
 export class ClientInfoController {
@@ -16,7 +17,7 @@ export class ClientInfoController {
   }
 
   @Patch('/update')
-  updateClientInfo(@Param() clientId: string, @Body() dto: FillInfoClientDto){
+  updateClientInfo(@Param() clientId: string, @Body() dto: UpdateInfoClientDto){
     return this.clientInfoService.updateClientInfo(clientId, dto)
   }
 
