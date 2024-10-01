@@ -49,13 +49,13 @@ export class AuthService {
         email: dto.email,
       },
     });
-    if (!user) {
-      throw new ForbiddenException('Invalid crendentials');
-    }
+    // if (!user) {
+    //   throw new ForbiddenException('Invalid crendentials');
+    // }
 
     const isValidPassword = await argon.verify(user.password, dto.password);
     if (!isValidPassword) {
-      throw new ForbiddenException('Invalid crendentials');
+      throw new ForbiddenException('Invalid password');
     }
     return this.signToken(user.id);
   }

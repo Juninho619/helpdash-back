@@ -18,11 +18,11 @@ exports.AuthLoginDto = AuthLoginDto;
 __decorate([
     (0, class_validator_1.IsEmail)(),
     (0, class_validator_1.IsNotEmpty)(),
-    (0, swagger_1.ApiProperty)({ type: String, description: 'email' }),
+    (0, swagger_1.ApiProperty)({ type: String, description: 'email', example: 'neo@matrix.fr' }),
     __metadata("design:type", String)
 ], AuthLoginDto.prototype, "email", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ type: String, description: 'password' }),
+    (0, swagger_1.ApiProperty)({ type: String, description: 'password', example: 'AAaa11&&&&' }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)

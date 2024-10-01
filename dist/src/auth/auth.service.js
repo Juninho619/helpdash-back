@@ -54,12 +54,9 @@ let AuthService = class AuthService {
                 email: dto.email,
             },
         });
-        if (!user) {
-            throw new common_1.ForbiddenException('Invalid crendentials');
-        }
         const isValidPassword = await argon.verify(user.password, dto.password);
         if (!isValidPassword) {
-            throw new common_1.ForbiddenException('Invalid crendentials');
+            throw new common_1.ForbiddenException('Invalid password');
         }
         return this.signToken(user.id);
     }
