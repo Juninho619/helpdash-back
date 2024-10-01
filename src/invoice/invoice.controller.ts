@@ -19,7 +19,6 @@ export class InvoiceController {
     return this.invoiceService.createInvoice(dto, user, client)
   }
 
-  // Update endpoint
   @Patch('/update')
   updateInvoice(@Param('id') id:string, @Body()dto: UpdateInvoiceDto){
     return this.invoiceService.updateInvoice(id, dto)
