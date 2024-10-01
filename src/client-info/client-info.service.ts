@@ -8,10 +8,10 @@ export class ClientInfoService {
     constructor(private prisma: PrismaService) {}
 
 
-    async getClientInfo(client: Client){
+    async getClientInfo(clientId: string){
         return this.prisma.clientInfo.findMany({
             where:{
-                clientId: client.id
+                clientId: clientId
             }
         })
     }

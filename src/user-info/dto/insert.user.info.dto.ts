@@ -1,9 +1,9 @@
-import { isEmail, IsIBAN } from "class-validator"
+import { IsEmail, isEmail, IsIBAN } from "class-validator"
 
 export class InsertUserInfoDto{
     businessname: string
 
-    @isEmail()
+    @IsEmail()
     billingEmail: string
 
     address: string

@@ -28,7 +28,7 @@ let InvoiceController = class InvoiceController {
         return this.invoiceService.createInvoice(dto, user, client);
     }
     updateInvoice(dto, user) {
-        return this.invoiceService.updateInvoice(dto, id);
+        return this.invoiceService.updateInvoice(dto, user.id);
     }
     deleteInvoice(id) {
         return this.invoiceService.deleteInvoice(id);
