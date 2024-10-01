@@ -71,7 +71,7 @@ model Role {
 }
 
 model Ticket {
-  id                 String @id
+  id                 String @id @default(uuid())
   order              Int    @default(autoincrement())
   problemDescription String
   userId             String

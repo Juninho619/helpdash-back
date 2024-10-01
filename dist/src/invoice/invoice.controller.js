@@ -28,8 +28,8 @@ let InvoiceController = class InvoiceController {
     createInvoice(dto, user, client) {
         return this.invoiceService.createInvoice(dto, user, client);
     }
-    updateInvoice(dto, user) {
-        return this.invoiceService.updateInvoice(dto, user.id);
+    updateInvoice(id, dto) {
+        return this.invoiceService.updateInvoice(id, dto);
     }
     deleteInvoice(id) {
         return this.invoiceService.deleteInvoice(id);
@@ -52,17 +52,17 @@ __decorate([
 ], InvoiceController.prototype, "createInvoice", null);
 __decorate([
     (0, common_1.Patch)('/update'),
-    __param(0, (0, common_1.Body)()),
-    __param(1, (0, common_1.Param)('id')),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [update_invoice_dto_1.UpdateInvoiceDto, Object]),
+    __metadata("design:paramtypes", [String, update_invoice_dto_1.UpdateInvoiceDto]),
     __metadata("design:returntype", void 0)
 ], InvoiceController.prototype, "updateInvoice", null);
 __decorate([
     (0, common_1.Delete)('/delete'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], InvoiceController.prototype, "deleteInvoice", null);
 exports.InvoiceController = InvoiceController = __decorate([

@@ -6,7 +6,7 @@ export declare class InvoiceService {
     private prisma;
     constructor(prisma: PrismaService);
     getAllInvoices(): Promise<{
-        id: number;
+        id: string;
         userId: string;
         startedAt: Date;
         endDate: Date;
@@ -15,7 +15,7 @@ export declare class InvoiceService {
         creationDate: Date;
     }[]>;
     createInvoice(dto: CreateInvoicedto, user: User, client: Client): Promise<{
-        id: number;
+        id: string;
         userId: string;
         startedAt: Date;
         endDate: Date;
@@ -23,8 +23,8 @@ export declare class InvoiceService {
         serviceDescription: string;
         creationDate: Date;
     }>;
-    updateInvoice(dto: UpdateInvoiceDto, id: string): Promise<{
-        id: number;
+    updateInvoice(id: string, dto: UpdateInvoiceDto): Promise<{
+        id: string;
         userId: string;
         startedAt: Date;
         endDate: Date;
@@ -32,8 +32,8 @@ export declare class InvoiceService {
         serviceDescription: string;
         creationDate: Date;
     }>;
-    deleteInvoice(id: number): Promise<{
-        id: number;
+    deleteInvoice(id: string): Promise<{
+        id: string;
         userId: string;
         startedAt: Date;
         endDate: Date;

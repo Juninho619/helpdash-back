@@ -43,14 +43,14 @@ let InvoiceService = class InvoiceService {
             }
         });
     }
-    async updateInvoice(dto, id) {
-        const existingTicket = await this.prisma.invoice.findUnique({
+    async updateInvoice(id, dto) {
+        const existingInvoice = await this.prisma.invoice.findFirst({
             where: {
                 id: id
             }
         });
-        if (!existingTicket) {
-            throw new common_1.ForbiddenException('unexisting id or invoice');
+        if (!existingInvoice) {
+            throw new common_1.ForbiddenException('Invoice does not exist');
         }
         return this.prisma.invoice.update({
             where: {
