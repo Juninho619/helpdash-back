@@ -44,14 +44,14 @@ export class AuthService {
   }
 
   async signin(dto: AuthLoginDto) {
-    const user = await this.prisma.user.findUnique({
+    const user = await this.prisma.user.findFirst({
       where: {
         email: dto.email,
       },
     });
-    // if (!user) {
-    //   throw new ForbiddenException('Invalid crendentials');
-    // }
+    if (!user) {
+       throw new ForbiddenException('Invalid crendentials');
+    }
 
     const isValidPassword = await argon.verify(user.password, dto.password);
     if (!isValidPassword) {

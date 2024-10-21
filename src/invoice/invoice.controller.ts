@@ -14,6 +14,11 @@ export class InvoiceController {
     return this.invoiceService.getAllInvoices
   }
 
+  @Get('/my')
+  getMyInvoices(userId: string){
+    return this.invoiceService.getMyInvoices(userId)
+  }
+
   @Post('/create')
   createInvoice(@Body() dto: CreateInvoicedto, @GetUser() user: User, client: Client){
     return this.invoiceService.createInvoice(dto, user, client)

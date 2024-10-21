@@ -6,41 +6,41 @@ export declare class UserInfoController {
     getUserInfo(userId: string): Promise<{
         id: string;
         userId: string;
-        billingEmail: string;
-        IBAN: string;
         businessName: string;
+        billingEmail: string;
         address: string;
         city: string;
         country: string;
+        IBAN: string;
     }>;
     createUserinfo(userId: string, dto: InsertUserInfoDto): Promise<{
         id: string;
         userId: string;
-        billingEmail: string;
-        IBAN: string;
         businessName: string;
+        billingEmail: string;
         address: string;
         city: string;
         country: string;
+        IBAN: string;
     }>;
     updateUserInfo(userId: string, dto: InsertUserInfoDto): Promise<{
         id: string;
         userId: string;
-        billingEmail: string;
-        IBAN: string;
         businessName: string;
+        billingEmail: string;
         address: string;
         city: string;
         country: string;
+        IBAN: string;
     }>;
     deleteUserInfo(id: string): Promise<{
         id: string;
         userId: string;
-        billingEmail: string;
-        IBAN: string;
         businessName: string;
+        billingEmail: string;
         address: string;
         city: string;
         country: string;
+        IBAN: string;
     }>;
 }

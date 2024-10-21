@@ -26,6 +26,25 @@ export class InvoiceService {
         })
     }
 
+    async getMyInvoices(userId: string){
+        const existingInvoice = await this.prisma.invoice.findMany({
+            where:{
+                userId: userId
+            }
+        })
+
+        if (!existingInvoice){
+            throw new ForbiddenException('no invoices for this user')
+        }
+
+        return this.prisma.invoice.findMany({
+            where:{
+                userId: userId
+            }
+        })
+
+    }
+
     async createInvoice(dto: CreateInvoicedto, user: User, client: Client){
         return this.prisma.invoice.create({
             data: {

@@ -7,6 +7,7 @@ import { InvoiceModule } from './invoice/invoice.module';
 import { RoleModule } from './role/role.module';
 import { UserInfoModule } from './user-info/user-info.module';
 import { ClientInfoModule } from './client-info/client-info.module';
+import { ClientModule } from './client/client.module';
 
 @Module({
   imports: [ ConfigModule.forRoot({
@@ -18,6 +19,7 @@ import { ClientInfoModule } from './client-info/client-info.module';
      InvoiceModule,
      RoleModule,
      UserInfoModule,
-     ClientInfoModule],
+     ClientInfoModule,
+     ClientModule],
 })
 export class AppModule {}

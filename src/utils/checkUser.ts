@@ -70,14 +70,14 @@ export async function checkuserIsAdmin(jwtId: string) {
         isActive: true,
       },
       include: {
-        roleModel: true,
+        userRole: true,
       },
     });
     if (!user || !user.id) {
       throw new ForbiddenException('Access to resources denied2');
     }
 
-    if (user.roleModel.name !== Roles.ADMIN) {
+    if (user.userRole.name !== Roles.ADMIN) {
       throw new ForbiddenException('Access to resources denied3');
     }
   } else {

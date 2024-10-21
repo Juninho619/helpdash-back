@@ -32,6 +32,21 @@ let InvoiceService = class InvoiceService {
             }
         });
     }
+    async getMyInvoices(userId) {
+        const existingInvoice = await this.prisma.invoice.findMany({
+            where: {
+                userId: userId
+            }
+        });
+        if (!existingInvoice) {
+            throw new common_1.ForbiddenException('no invoices for this user');
+        }
+        return this.prisma.invoice.findMany({
+            where: {
+                userId: userId
+            }
+        });
+    }
     async createInvoice(dto, user, client) {
         return this.prisma.invoice.create({
             data: {

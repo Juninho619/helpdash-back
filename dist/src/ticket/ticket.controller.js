@@ -24,6 +24,9 @@ let TicketController = class TicketController {
     getAllTickets() {
         return this.ticketService.getAllTickets();
     }
+    getMyTickets(userId) {
+        return this.ticketService.getMyTickets(userId);
+    }
     createTicket(dto, user) {
         return this.ticketService.createTicket(dto, user);
     }
@@ -41,6 +44,12 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], TicketController.prototype, "getAllTickets", null);
+__decorate([
+    (0, common_1.Get)('/my/:id'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], TicketController.prototype, "getMyTickets", null);
 __decorate([
     (0, common_1.Post)('/create'),
     __param(0, (0, common_1.Body)()),

@@ -29,6 +29,21 @@ let TicketService = class TicketService {
             }
         });
     }
+    async getMyTickets(userId) {
+        const existingTicket = await this.prisma.ticket.findFirst({
+            where: {
+                userId: userId
+            }
+        });
+        if (!existingTicket) {
+            throw new common_1.ForbiddenException('User does not have ticket');
+        }
+        return this.prisma.invoice.findMany({
+            where: {
+                userId: userId
+            }
+        });
+    }
     async createTicket(dto, user) {
         return this.prisma.ticket.create({
             data: {

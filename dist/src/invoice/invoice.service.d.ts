@@ -8,37 +8,46 @@ export declare class InvoiceService {
     getAllInvoices(): Promise<{
         id: string;
         userId: string;
-        startedAt: Date;
-        endDate: Date;
         clientId: string;
         serviceDescription: string;
+        startedAt: Date;
+        endDate: Date;
+        creationDate: Date;
+    }[]>;
+    getMyInvoices(userId: string): Promise<{
+        id: string;
+        userId: string;
+        clientId: string;
+        serviceDescription: string;
+        startedAt: Date;
+        endDate: Date;
         creationDate: Date;
     }[]>;
     createInvoice(dto: CreateInvoicedto, user: User, client: Client): Promise<{
         id: string;
         userId: string;
-        startedAt: Date;
-        endDate: Date;
         clientId: string;
         serviceDescription: string;
+        startedAt: Date;
+        endDate: Date;
         creationDate: Date;
     }>;
     updateInvoice(id: string, dto: UpdateInvoiceDto): Promise<{
         id: string;
         userId: string;
-        startedAt: Date;
-        endDate: Date;
         clientId: string;
         serviceDescription: string;
+        startedAt: Date;
+        endDate: Date;
         creationDate: Date;
     }>;
     deleteInvoice(id: string): Promise<{
         id: string;
         userId: string;
-        startedAt: Date;
-        endDate: Date;
         clientId: string;
         serviceDescription: string;
+        startedAt: Date;
+        endDate: Date;
         creationDate: Date;
     }>;
 }
