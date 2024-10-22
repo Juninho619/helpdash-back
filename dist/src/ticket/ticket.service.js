@@ -38,9 +38,14 @@ let TicketService = class TicketService {
         if (!existingTicket) {
             throw new common_1.ForbiddenException('User does not have ticket');
         }
-        return this.prisma.invoice.findMany({
+        return this.prisma.ticket.findMany({
             where: {
                 userId: userId
+            },
+            select: {
+                order: true,
+                title: true,
+                problemDescription: true
             }
         });
     }
@@ -48,6 +53,7 @@ let TicketService = class TicketService {
         return this.prisma.ticket.create({
             data: {
                 problemDescription: dto.problemDescription,
+                title: dto.title,
                 userId: user.id,
             }
         });

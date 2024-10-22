@@ -22,12 +22,12 @@ let AuthService = class AuthService {
         this.config = config;
     }
     async signup(dto) {
-        const exisingUser = await this.prisma.user.findUnique({
+        const existingUser = await this.prisma.user.findUnique({
             where: {
                 email: dto.email,
             },
         });
-        if (exisingUser) {
+        if (existingUser) {
             throw new common_1.ForbiddenException('Email already taken');
         }
         const hash = await argon.hash(dto.password);

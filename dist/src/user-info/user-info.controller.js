@@ -29,8 +29,8 @@ let UserInfoController = class UserInfoController {
     updateUserInfo(userId, dto) {
         return this.userInfoService.updateUserInfo(userId, dto);
     }
-    deleteUserInfo(id) {
-        return this.userInfoService.deleteUserInfo(id);
+    deleteUserInfo(id, userId) {
+        return this.userInfoService.deleteUserInfo(id, userId);
     }
 };
 exports.UserInfoController = UserInfoController;
@@ -61,7 +61,7 @@ __decorate([
     (0, common_1.Delete)('/delete/:userId'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", void 0)
 ], UserInfoController.prototype, "deleteUserInfo", null);
 exports.UserInfoController = UserInfoController = __decorate([

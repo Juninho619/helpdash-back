@@ -11,27 +11,26 @@ export declare class TicketService {
         userId: string;
     }[]>;
     getMyTickets(userId: string): Promise<{
-        id: string;
-        userId: string;
-        clientId: string;
-        serviceDescription: string;
-        startedAt: Date;
-        endDate: Date;
-        creationDate: Date;
+        title: string;
+        order: number;
+        problemDescription: string;
     }[]>;
     createTicket(dto: InsertTicketDto, user: User): Promise<{
+        title: string;
         id: string;
         order: number;
         problemDescription: string;
         userId: string;
     }>;
     updateTicket(id: string, dto: InsertTicketDto): Promise<{
+        title: string;
         id: string;
         order: number;
         problemDescription: string;
         userId: string;
     }>;
     deleteTicket(id: string): Promise<{
+        title: string;
         id: string;
         order: number;
         problemDescription: string;

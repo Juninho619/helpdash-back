@@ -12,10 +12,10 @@ const prisma_module_1 = require("../prisma/prisma.module");
 const config_1 = require("@nestjs/config");
 const auth_module_1 = require("./auth/auth.module");
 const ticket_module_1 = require("./ticket/ticket.module");
-const invoice_module_1 = require("./invoice/invoice.module");
 const role_module_1 = require("./role/role.module");
 const user_info_module_1 = require("./user-info/user-info.module");
 const client_info_module_1 = require("./client-info/client-info.module");
+const client_module_1 = require("./client/client.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -27,10 +27,10 @@ exports.AppModule = AppModule = __decorate([
             prisma_module_1.PrismaModule,
             auth_module_1.AuthModule,
             ticket_module_1.TicketModule,
-            invoice_module_1.InvoiceModule,
             role_module_1.RoleModule,
             user_info_module_1.UserInfoModule,
-            client_info_module_1.ClientInfoModule],
+            client_info_module_1.ClientInfoModule,
+            client_module_1.ClientModule],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

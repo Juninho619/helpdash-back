@@ -13,12 +13,12 @@ export class AuthService {
     private config: ConfigService,
   ) {}
   async signup(dto: AuthRegisterDto) {
-    const exisingUser = await this.prisma.user.findUnique({
+    const existingUser = await this.prisma.user.findUnique({
       where: {
         email: dto.email,
       },
     });
-    if (exisingUser) {
+    if (existingUser) {
       throw new ForbiddenException('Email already taken');
     }
 
