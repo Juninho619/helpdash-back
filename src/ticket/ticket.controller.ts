@@ -1,10 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
 import { TicketService } from './ticket.service';
 import { InsertTicketDto } from './dto/insert.ticket.dto';
-import { GetUser } from 'src/auth';
 import { User } from '@prisma/client';
+import { UpdateTicketDto } from './dto/update.ticket.dto';
+import { GetUser } from 'src/auth';
+import { JwtGuard } from 'src/auth/guard';
 
 
+@UseGuards(JwtGuard)
 @Controller('ticket')
 export class TicketController {
   constructor(private readonly ticketService: TicketService) {}
@@ -14,25 +17,27 @@ export class TicketController {
     return this.ticketService.getAllTickets()
   }
 
-  @Get('/my/:id')
-  getMyTickets(userId: string){
-    return this.ticketService.getMyTickets(userId)
+  @Get('/my')
+  getMyTickets(@GetUser()user: User){
+    return this.ticketService.getMyTickets(user.id)
   }
   
   @Post('/create')
-  createTicket(@Body() dto: InsertTicketDto, @GetUser() user: User){
-    return this.ticketService.createTicket(dto, user)
+  createTicket(@Body() dto: InsertTicketDto, @GetUser() user: User){    
+    return this.ticketService.createTicket(dto, user.id)
   }
 
   @Patch('/update/:id')
-  insertTicket(@Body() dto: InsertTicketDto, @Param('id') user: User) {
-    return this.ticketService.createTicket(dto, user);
-  }
-
-  @Delete('/delete/:id')
-  deleteTicket(@Param('id') id: string){
-    return this.ticketService.deleteTicket(id)
-  }
+    updateTicket(
+    @Body() dto: UpdateTicketDto,
+    @Param('id') ticketId: string,
+    @GetUser() user: User
+) {
+    return this.ticketService.updateTicket(ticketId, dto, user.id); 
+}
   
-
+  @Delete('/delete/:id')
+  deleteTicket(@Param('id') id: string, @GetUser() user: User){
+    return this.ticketService.deleteTicket(id, user.id)
+  }
 }

@@ -16,7 +16,9 @@ exports.TicketController = void 0;
 const common_1 = require("@nestjs/common");
 const ticket_service_1 = require("./ticket.service");
 const insert_ticket_dto_1 = require("./dto/insert.ticket.dto");
+const update_ticket_dto_1 = require("./dto/update.ticket.dto");
 const auth_1 = require("../auth");
+const guard_1 = require("../auth/guard");
 let TicketController = class TicketController {
     constructor(ticketService) {
         this.ticketService = ticketService;
@@ -24,17 +26,17 @@ let TicketController = class TicketController {
     getAllTickets() {
         return this.ticketService.getAllTickets();
     }
-    getMyTickets(userId) {
-        return this.ticketService.getMyTickets(userId);
+    getMyTickets(user) {
+        return this.ticketService.getMyTickets(user.id);
     }
     createTicket(dto, user) {
-        return this.ticketService.createTicket(dto, user);
+        return this.ticketService.createTicket(dto, user.id);
     }
-    insertTicket(dto, user) {
-        return this.ticketService.createTicket(dto, user);
+    updateTicket(dto, ticketId, user) {
+        return this.ticketService.updateTicket(ticketId, dto, user.id);
     }
-    deleteTicket(id) {
-        return this.ticketService.deleteTicket(id);
+    deleteTicket(id, user) {
+        return this.ticketService.deleteTicket(id, user.id);
     }
 };
 exports.TicketController = TicketController;
@@ -45,9 +47,10 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], TicketController.prototype, "getAllTickets", null);
 __decorate([
-    (0, common_1.Get)('/my/:id'),
+    (0, common_1.Get)('/my'),
+    __param(0, (0, auth_1.GetUser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], TicketController.prototype, "getMyTickets", null);
 __decorate([
@@ -62,18 +65,21 @@ __decorate([
     (0, common_1.Patch)('/update/:id'),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Param)('id')),
+    __param(2, (0, auth_1.GetUser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [insert_ticket_dto_1.InsertTicketDto, Object]),
+    __metadata("design:paramtypes", [update_ticket_dto_1.UpdateTicketDto, String, Object]),
     __metadata("design:returntype", void 0)
-], TicketController.prototype, "insertTicket", null);
+], TicketController.prototype, "updateTicket", null);
 __decorate([
     (0, common_1.Delete)('/delete/:id'),
     __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, auth_1.GetUser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", void 0)
 ], TicketController.prototype, "deleteTicket", null);
 exports.TicketController = TicketController = __decorate([
+    (0, common_1.UseGuards)(guard_1.JwtGuard),
     (0, common_1.Controller)('ticket'),
     __metadata("design:paramtypes", [ticket_service_1.TicketService])
 ], TicketController);
