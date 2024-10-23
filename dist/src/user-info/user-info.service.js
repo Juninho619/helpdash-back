@@ -12,11 +12,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserInfoService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../../prisma/prisma.service");
+const checkUser_1 = require("../utils/checkUser");
 let UserInfoService = class UserInfoService {
     constructor(prisma) {
         this.prisma = prisma;
     }
     async getUserInfo(userId) {
+        await (0, checkUser_1.checkUserHasAccount)(userId);
         return this.prisma.userInfo.findFirst({
             where: {
                 id: userId
@@ -34,6 +36,7 @@ let UserInfoService = class UserInfoService {
         });
     }
     async fillInfoUser(userId, dto) {
+        (0, checkUser_1.checkUserHasAccount)(userId);
         const userExists = await this.prisma.user.findFirst({
             where: {
                 id: userId
@@ -55,6 +58,7 @@ let UserInfoService = class UserInfoService {
         });
     }
     async updateUserInfo(userId, dto) {
+        (0, checkUser_1.checkUserHasAccount)(userId);
         const userExists = await this.prisma.user.findFirst({
             where: {
                 id: userId
@@ -78,14 +82,15 @@ let UserInfoService = class UserInfoService {
             }
         });
     }
-    async deleteUserInfo(id) {
+    async deleteUserInfo(userId, id) {
+        await (0, checkUser_1.checkUserHasAccount)(userId);
         const userInfoExists = await this.prisma.userInfo.findFirst({
             where: {
                 id: id
             }
         });
         if (!userInfoExists) {
-            throw new common_1.ForbiddenException('No user infor with this id');
+            throw new common_1.ForbiddenException('No user info with this id');
         }
         return this.prisma.userInfo.delete({
             where: {

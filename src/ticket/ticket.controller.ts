@@ -13,6 +13,11 @@ export class TicketController {
   getAllTickets(){
     return this.ticketService.getAllTickets()
   }
+
+  @Get('/my/:id')
+  getMyTickets(userId: string){
+    return this.ticketService.getMyTickets(userId)
+  }
   
   @Post('/create')
   createTicket(@Body() dto: InsertTicketDto, @GetUser() user: User){

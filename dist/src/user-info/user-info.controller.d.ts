@@ -33,7 +33,7 @@ export declare class UserInfoController {
         city: string;
         country: string;
     }>;
-    deleteUserInfo(id: string): Promise<{
+    deleteUserInfo(id: string, userId: string): Promise<{
         id: string;
         userId: string;
         billingEmail: string;

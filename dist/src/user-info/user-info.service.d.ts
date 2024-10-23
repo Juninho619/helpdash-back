@@ -33,7 +33,7 @@ export declare class UserInfoService {
         city: string;
         country: string;
     }>;
-    deleteUserInfo(id: string): Promise<{
+    deleteUserInfo(userId: string, id: string): Promise<{
         id: string;
         userId: string;
         billingEmail: string;

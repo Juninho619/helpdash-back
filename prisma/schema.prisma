@@ -8,7 +8,7 @@ generator client {
 }
 
 model User {
-  id        String    @id @default(uuid())
+  id        String    @id @default(uuid()) @unique
   email     String    @unique
   firstName String
   lastName  String
@@ -16,14 +16,14 @@ model User {
   password  String
   createdAt DateTime  @default(now())
   isActive  Boolean
-  invoices  Invoice[]
   userInfo  UserInfo?
-  roleModel Role      @relation(fields: [role], references: [id])
+  userRole  Role      @relation(fields: [role], references: [id])
   Ticket    Ticket[]
+  Client    Client[]
 }
 
 model UserInfo {
-  id           String @id @default(uuid())
+  id           String @id @default(uuid()) 
   userId       String @unique
   businessName String
   billingEmail String
@@ -36,9 +36,10 @@ model UserInfo {
 
 model Client {
   id         String      @id @default(uuid())
+  userId     String      @default(uuid())
   name       String
-  invoices   Invoice[]
   clientInfo ClientInfo?
+  user       User        @relation(fields: [userId], references: [id])
 }
 
 model ClientInfo {
@@ -52,18 +53,6 @@ model ClientInfo {
   client       Client @relation(fields: [clientId], references: [id])
 }
 
-model Invoice {
-  id                 String      @id @default(uuid())
-  clientId           String
-  userId             String
-  serviceDescription String
-  startedAt          DateTime
-  endDate            DateTime
-  creationDate       DateTime @default(now())
-  client             Client   @relation(fields: [clientId], references: [id])
-  user               User     @relation(fields: [userId], references: [id])
-}
-
 model Role {
   id    String @id @default(uuid())
   name  String
@@ -73,6 +62,7 @@ model Role {
 model Ticket {
   id                 String @id @default(uuid())
   order              Int    @default(autoincrement())
+  title              String
   problemDescription String
   userId             String
   user               User   @relation(fields: [userId], references: [id])

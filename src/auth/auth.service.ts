@@ -13,12 +13,12 @@ export class AuthService {
     private config: ConfigService,
   ) {}
   async signup(dto: AuthRegisterDto) {
-    const exisingUser = await this.prisma.user.findUnique({
+    const existingUser = await this.prisma.user.findUnique({
       where: {
         email: dto.email,
       },
     });
-    if (exisingUser) {
+    if (existingUser) {
       throw new ForbiddenException('Email already taken');
     }
 
@@ -44,14 +44,14 @@ export class AuthService {
   }
 
   async signin(dto: AuthLoginDto) {
-    const user = await this.prisma.user.findUnique({
+    const user = await this.prisma.user.findFirst({
       where: {
         email: dto.email,
       },
     });
-    // if (!user) {
-    //   throw new ForbiddenException('Invalid crendentials');
-    // }
+    if (!user) {
+       throw new ForbiddenException('Invalid crendentials');
+    }
 
     const isValidPassword = await argon.verify(user.password, dto.password);
     if (!isValidPassword) {

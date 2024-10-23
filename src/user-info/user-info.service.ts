@@ -1,6 +1,7 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma.service';
 import { InsertUserInfoDto } from './dto/insert.user.info.dto';
+import { checkUserHasAccount } from 'src/utils/checkUser';
 
 @Injectable()
 export class UserInfoService {
@@ -8,6 +9,8 @@ export class UserInfoService {
 
     async getUserInfo(userId: string){
         // add authorization if good user, admin or user himself. 
+        await checkUserHasAccount(userId)
+
         return this.prisma.userInfo.findFirst({
             where:{
                 id: userId
@@ -26,6 +29,8 @@ export class UserInfoService {
     }
 
     async fillInfoUser(userId: string, dto: InsertUserInfoDto){
+        checkUserHasAccount(userId)
+
         const userExists = await this.prisma.user.findFirst({
             where :{
                 id: userId
@@ -51,6 +56,7 @@ export class UserInfoService {
     }
 
     async updateUserInfo(userId: string, dto: InsertUserInfoDto){
+        checkUserHasAccount(userId) 
         const userExists = await this.prisma.user.findFirst({
             where :{
                 id: userId
@@ -78,7 +84,8 @@ export class UserInfoService {
 
     }
 
-    async deleteUserInfo(id: string){
+    async deleteUserInfo(userId: string, id: string){
+        await checkUserHasAccount(userId)
         const userInfoExists = await this.prisma.userInfo.findFirst({
             where:{
                 id: id
@@ -87,7 +94,7 @@ export class UserInfoService {
         })
 
         if(!userInfoExists){
-            throw new ForbiddenException('No user infor with this id')
+            throw new ForbiddenException('No user info with this id')
         }
 
         return this.prisma.userInfo.delete({

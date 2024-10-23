@@ -12,69 +12,56 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TicketController = void 0;
+exports.ClientController = void 0;
 const common_1 = require("@nestjs/common");
-const ticket_service_1 = require("./ticket.service");
-const insert_ticket_dto_1 = require("./dto/insert.ticket.dto");
-const auth_1 = require("../auth");
-let TicketController = class TicketController {
-    constructor(ticketService) {
-        this.ticketService = ticketService;
+const client_service_1 = require("./client.service");
+let ClientController = class ClientController {
+    constructor(clientService) {
+        this.clientService = clientService;
     }
-    getAllTickets() {
-        return this.ticketService.getAllTickets();
+    getMyclients(userId) {
+        return this.getMyclients(userId);
     }
-    getMyTickets(userId) {
-        return this.ticketService.getMyTickets(userId);
+    createClient(clientName) {
+        return this.createClient(clientName);
     }
-    createTicket(dto, user) {
-        return this.ticketService.createTicket(dto, user);
+    updateClient(newClientName, id) {
+        return this.updateClient(newClientName, id);
     }
-    insertTicket(dto, user) {
-        return this.ticketService.createTicket(dto, user);
-    }
-    deleteTicket(id) {
-        return this.ticketService.deleteTicket(id);
+    deleteClient(id) {
+        return this.deleteClient(id);
     }
 };
-exports.TicketController = TicketController;
+exports.ClientController = ClientController;
 __decorate([
     (0, common_1.Get)('/all'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
-], TicketController.prototype, "getAllTickets", null);
+], ClientController.prototype, "getMyclients", null);
 __decorate([
-    (0, common_1.Get)('/my/:id'),
+    (0, common_1.Post)('/create'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
-], TicketController.prototype, "getMyTickets", null);
-__decorate([
-    (0, common_1.Post)('/create'),
-    __param(0, (0, common_1.Body)()),
-    __param(1, (0, auth_1.GetUser)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [insert_ticket_dto_1.InsertTicketDto, Object]),
-    __metadata("design:returntype", void 0)
-], TicketController.prototype, "createTicket", null);
+], ClientController.prototype, "createClient", null);
 __decorate([
     (0, common_1.Patch)('/update/:id'),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [insert_ticket_dto_1.InsertTicketDto, Object]),
+    __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", void 0)
-], TicketController.prototype, "insertTicket", null);
+], ClientController.prototype, "updateClient", null);
 __decorate([
     (0, common_1.Delete)('/delete/:id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
-], TicketController.prototype, "deleteTicket", null);
-exports.TicketController = TicketController = __decorate([
-    (0, common_1.Controller)('ticket'),
-    __metadata("design:paramtypes", [ticket_service_1.TicketService])
-], TicketController);
-//# sourceMappingURL=ticket.controller.js.map
+], ClientController.prototype, "deleteClient", null);
+exports.ClientController = ClientController = __decorate([
+    (0, common_1.Controller)('client'),
+    __metadata("design:paramtypes", [client_service_1.ClientService])
+], ClientController);
+//# sourceMappingURL=client.controller.js.map

@@ -21,10 +21,36 @@ export class TicketService {
         })
       }
 
+    async getMyTickets(userId: string){
+        const existingTicket = await this.prisma.ticket.findFirst({
+            where:{
+                userId: userId
+            }
+        })
+
+        if (!existingTicket){
+            throw new ForbiddenException('User does not have ticket')
+        }
+
+        return this.prisma.ticket.findMany({
+            where:{
+                userId: userId
+            },
+            select:{
+                order: true,
+                title: true,
+                problemDescription: true
+            }
+        })
+    
+        
+    }
+
     async createTicket(dto: InsertTicketDto, user: User){
         return this.prisma.ticket.create({
             data: {
                 problemDescription: dto.problemDescription,
+                title: dto.title,
                 userId: user.id,
             }
         })
