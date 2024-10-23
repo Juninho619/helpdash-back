@@ -1,7 +1,9 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { PrismaService } from 'prisma/prisma.service';
 import { InsertTicketDto } from './dto/insert.ticket.dto';
+import { checkUserHasAccount } from 'src/utils/checkUser';
+import { UpdateTicketDto } from './dto';
 
 @Injectable()
 export class TicketService {
@@ -22,6 +24,7 @@ export class TicketService {
       }
 
     async getMyTickets(userId: string){
+        await checkUserHasAccount(userId)
         const existingTicket = await this.prisma.ticket.findFirst({
             where:{
                 userId: userId
@@ -46,17 +49,29 @@ export class TicketService {
         
     }
 
-    async createTicket(dto: InsertTicketDto, user: User){
-        return this.prisma.ticket.create({
+    async createTicket(dto: InsertTicketDto, userId: string){
+        if (!userId){
+            console.log('cunt');
+            
+        }
+        
+        await checkUserHasAccount(userId)
+        try{
+        return await this.prisma.ticket.create({
             data: {
                 problemDescription: dto.problemDescription,
                 title: dto.title,
-                userId: user.id,
+                userId: userId,
             }
         })
+    }catch(error){
+        console.error('Error creating ticket:', error);
+        throw new InternalServerErrorException('');
     }
+}
 
-    async updateTicket(id: string, dto: InsertTicketDto){
+    async updateTicket(id: string, dto: UpdateTicketDto, userId: string){
+        await checkUserHasAccount(userId)
         const existingTicket = await this.prisma.ticket.findUnique({
             where: {
                 id: id,
@@ -77,7 +92,9 @@ export class TicketService {
             });
           }
 
-    async deleteTicket(id: string){
+    async deleteTicket(id: string, userId: string){
+        await checkUserHasAccount(userId)
+
         const existingTicket = await this.prisma.ticket.findUnique({
             where: {
                 id: id,
