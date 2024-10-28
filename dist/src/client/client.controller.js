@@ -15,37 +15,45 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ClientController = void 0;
 const common_1 = require("@nestjs/common");
 const client_service_1 = require("./client.service");
+const create_client_dto_1 = require("./dto/create.client.dto");
+const auth_1 = require("../auth");
+const guard_1 = require("../auth/guard");
 let ClientController = class ClientController {
     constructor(clientService) {
         this.clientService = clientService;
     }
     getMyclients(userId) {
-        return this.getMyclients(userId);
+        return this.clientService.getMyclients(userId);
     }
-    createClient(clientName) {
-        return this.createClient(clientName);
+    createClient(dto, user) {
+        return this.clientService.createClient(dto, user.id);
     }
     updateClient(newClientName, id) {
-        return this.updateClient(newClientName, id);
+        return this.clientService.updateClient(newClientName, id);
     }
     deleteClient(id) {
-        return this.deleteClient(id);
+        return this.clientService.deleteClient(id);
     }
 };
 exports.ClientController = ClientController;
 __decorate([
+    (0, common_1.HttpCode)(200),
     (0, common_1.Get)('/all'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], ClientController.prototype, "getMyclients", null);
 __decorate([
+    (0, common_1.HttpCode)(201),
     (0, common_1.Post)('/create'),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, auth_1.GetUser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [create_client_dto_1.CreateClientDto, Object]),
     __metadata("design:returntype", void 0)
 ], ClientController.prototype, "createClient", null);
 __decorate([
+    (0, common_1.HttpCode)(200),
     (0, common_1.Patch)('/update/:id'),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Param)('id')),
@@ -54,6 +62,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ClientController.prototype, "updateClient", null);
 __decorate([
+    (0, common_1.HttpCode)(204),
     (0, common_1.Delete)('/delete/:id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
@@ -61,6 +70,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ClientController.prototype, "deleteClient", null);
 exports.ClientController = ClientController = __decorate([
+    (0, common_1.UseGuards)(guard_1.JwtGuard),
     (0, common_1.Controller)('client'),
     __metadata("design:paramtypes", [client_service_1.ClientService])
 ], ClientController);

@@ -50,24 +50,20 @@ export class TicketService {
     }
 
     async createTicket(dto: InsertTicketDto, userId: string){
-        if (!userId){
-            console.log('cunt');
-            
-        }
-        
         await checkUserHasAccount(userId)
         try{
-        return await this.prisma.ticket.create({
-            data: {
-                problemDescription: dto.problemDescription,
-                title: dto.title,
-                userId: userId,
-            }
-        })
-    }catch(error){
-        console.error('Error creating ticket:', error);
-        throw new InternalServerErrorException('');
-    }
+            const request =   await this.prisma.ticket.create({
+                data: {
+                    problemDescription: dto.problemDescription,
+                    title: dto.title,
+                    userId: userId,
+                    }
+                })
+            console.log(request);
+        }catch(error){
+            console.error('Error creating ticket:', error);
+            throw new InternalServerErrorException('');
+        }
 }
 
     async updateTicket(id: string, dto: UpdateTicketDto, userId: string){
@@ -82,7 +78,7 @@ export class TicketService {
             throw new ForbiddenException('Unexisting id or ticket');
         }
 
-        return this.prisma.ticket.update({
+        return await this.prisma.ticket.update({
             where: {
                 id: id,
             },
@@ -90,6 +86,7 @@ export class TicketService {
                 ...dto,
               },
             });
+        
           }
 
     async deleteTicket(id: string, userId: string){
@@ -104,11 +101,13 @@ export class TicketService {
         if (!existingTicket || !existingTicket.id){
             throw new ForbiddenException("Id doesn't exist");
         } else {
-            return this.prisma.ticket.delete({
+            const ticketDeletion = await this.prisma.ticket.delete({
                 where:{
                     id: id
                 }
+
             })
+            return ticketDeletion
 
         }
 

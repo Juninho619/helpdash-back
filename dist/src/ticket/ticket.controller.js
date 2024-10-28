@@ -54,6 +54,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], TicketController.prototype, "getMyTickets", null);
 __decorate([
+    (0, common_1.HttpCode)(201),
     (0, common_1.Post)('/create'),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, auth_1.GetUser)()),
@@ -62,6 +63,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], TicketController.prototype, "createTicket", null);
 __decorate([
+    (0, common_1.HttpCode)(200),
     (0, common_1.Patch)('/update/:id'),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Param)('id')),
@@ -71,6 +73,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], TicketController.prototype, "updateTicket", null);
 __decorate([
+    (0, common_1.HttpCode)(204),
     (0, common_1.Delete)('/delete/:id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, auth_1.GetUser)()),

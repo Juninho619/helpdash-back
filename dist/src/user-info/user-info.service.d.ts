@@ -12,6 +12,8 @@ export declare class UserInfoService {
         address: string;
         city: string;
         country: string;
+    } | {
+        error: any;
     }>;
     fillInfoUser(userId: string, dto: InsertUserInfoDto): Promise<{
         id: string;
@@ -22,6 +24,8 @@ export declare class UserInfoService {
         address: string;
         city: string;
         country: string;
+    } | {
+        error: any;
     }>;
     updateUserInfo(userId: string, dto: InsertUserInfoDto): Promise<{
         id: string;
@@ -32,8 +36,10 @@ export declare class UserInfoService {
         address: string;
         city: string;
         country: string;
+    } | {
+        error: any;
     }>;
-    deleteUserInfo(userId: string, id: string): Promise<{
+    deleteUserInfo(userId: string): Promise<{
         id: string;
         userId: string;
         billingEmail: string;
@@ -42,5 +48,7 @@ export declare class UserInfoService {
         address: string;
         city: string;
         country: string;
+    } | {
+        error: any;
     }>;
 }

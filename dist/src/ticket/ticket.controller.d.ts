@@ -12,28 +12,22 @@ export declare class TicketController {
         userId: string;
     }[]>;
     getMyTickets(user: User): Promise<{
-        order: number;
         title: string;
+        order: number;
         problemDescription: string;
     }[]>;
-    createTicket(dto: InsertTicketDto, user: User): Promise<{
-        id: string;
-        order: number;
-        title: string;
-        problemDescription: string;
-        userId: string;
-    }>;
+    createTicket(dto: InsertTicketDto, user: User): Promise<void>;
     updateTicket(dto: UpdateTicketDto, ticketId: string, user: User): Promise<{
+        title: string;
         id: string;
         order: number;
-        title: string;
         problemDescription: string;
         userId: string;
     }>;
     deleteTicket(id: string, user: User): Promise<{
+        title: string;
         id: string;
         order: number;
-        title: string;
         problemDescription: string;
         userId: string;
     }>;
