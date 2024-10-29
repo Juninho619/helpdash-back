@@ -6,6 +6,7 @@ export declare class ClientController {
     constructor(clientService: ClientService);
     getMyclients(userId: string): Promise<{
         name: string;
+        id: string;
     }[]>;
     createClient(dto: CreateClientDto, user: User): Promise<{
         name: string;

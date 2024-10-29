@@ -5,6 +5,7 @@ export declare class ClientService {
     constructor(prisma: PrismaService);
     getMyclients(userId: string): Promise<{
         name: string;
+        id: string;
     }[]>;
     createClient(dto: CreateClientDto, userId: string): Promise<{
         name: string;

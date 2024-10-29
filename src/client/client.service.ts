@@ -15,6 +15,7 @@ export class ClientService {
                 name:'asc'
             },
             select:{
+                id: true,
                 name: true
             }
         })
