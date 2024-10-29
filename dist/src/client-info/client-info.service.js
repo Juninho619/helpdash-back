@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ClientInfoService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../../prisma/prisma.service");
+const guard_1 = require("../auth/guard");
 let ClientInfoService = class ClientInfoService {
     constructor(prisma) {
         this.prisma = prisma;
@@ -20,6 +21,14 @@ let ClientInfoService = class ClientInfoService {
         return this.prisma.clientInfo.findMany({
             where: {
                 clientId: clientId
+            },
+            select: {
+                clientId: true,
+                address: true,
+                city: true,
+                country: true,
+                IBAN: true,
+                emailAddress: true
             }
         });
     }
@@ -75,6 +84,7 @@ let ClientInfoService = class ClientInfoService {
 };
 exports.ClientInfoService = ClientInfoService;
 exports.ClientInfoService = ClientInfoService = __decorate([
+    (0, common_1.UseGuards)(guard_1.JwtGuard),
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [prisma_service_1.PrismaService])
 ], ClientInfoService);

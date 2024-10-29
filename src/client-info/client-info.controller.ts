@@ -6,8 +6,8 @@ import { UpdateInfoClientDto } from './dto/update.info.client.dto';
 @Controller('client-info')
 export class ClientInfoController {
   constructor(private readonly clientInfoService: ClientInfoService) {}
-  @Get('/all')
-  getClientInfo(clientId: string){
+  @Get('/:clientid')
+  getClientInfo(@Param('clientid') clientId: string){
     return this.clientInfoService.getClientInfo(clientId)
   }
 

@@ -1,9 +1,10 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
-import { Client, ClientInfo, User } from '@prisma/client';
+import { ForbiddenException, Injectable, UseGuards } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma.service';
 import { FillInfoClientDto } from './dto/fill.info.client.dto';
 import { UpdateInfoClientDto } from './dto/update.info.client.dto';
+import { JwtGuard } from 'src/auth/guard';
 
+@UseGuards(JwtGuard)
 @Injectable()
 export class ClientInfoService {
     constructor(private prisma: PrismaService) {}
@@ -13,6 +14,14 @@ export class ClientInfoService {
         return this.prisma.clientInfo.findMany({
             where:{
                 clientId: clientId
+            },
+            select:{
+                clientId: true,
+                address: true,
+                city: true,
+                country: true,
+                IBAN: true,
+                emailAddress: true
             }
         })
     }
