@@ -2,15 +2,16 @@ import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma.service';
 import { InsertUserInfoDto } from './dto/insert.user.info.dto';
 import { checkUserHasAccount } from 'src/utils/checkUser';
+import { User } from '@prisma/client';
 
 @Injectable()
 export class UserInfoService {
     constructor(private prisma: PrismaService) {}
 
     async getUserInfo(userId: string){
-        // add authorization if good user, admin or user himself. 
         await checkUserHasAccount(userId)
 
+        try{
         return this.prisma.userInfo.findFirst({
             where:{
                 id: userId
@@ -26,6 +27,11 @@ export class UserInfoService {
                 IBAN: true
             }
         })
+    }catch(e){
+        console.log(e);
+        return({'error': e})
+        
+    }
     }
 
     async fillInfoUser(userId: string, dto: InsertUserInfoDto){
@@ -41,17 +47,22 @@ export class UserInfoService {
             throw new ForbiddenException('User does not exist')
         }
 
+        try{
         return this.prisma.userInfo.create({
             data:{
                 userId: userId,
                 businessName: dto.businessname,
-                billingEmail: dto.billingEmail,
+                billingEmail: dto.billingEmail,             
                 address: dto.address,
                 city: dto.city,
                 country: dto.country,
                 IBAN: dto.IBAN
             }
         })
+        }catch(e){
+            console.log(e);
+            return({'error': e})
+        }
 
     }
 
@@ -67,10 +78,12 @@ export class UserInfoService {
             throw new ForbiddenException('User does not exist')
         }
 
+        try{
         return this.prisma.userInfo.update({
             where:{
                 userId: userId
             },
+
             data:{
                 userId: userId,
                 businessName: dto.businessname,
@@ -81,14 +94,18 @@ export class UserInfoService {
                 IBAN: dto.IBAN
             }
         })
+    }catch(e){
+        console.log(e);
+        return({'error': e})
+    }
 
     }
 
-    async deleteUserInfo(userId: string, id: string){
+    async deleteUserInfo(userId: string){
         await checkUserHasAccount(userId)
         const userInfoExists = await this.prisma.userInfo.findFirst({
             where:{
-                id: id
+                id: userId
             }
             
         })
@@ -97,10 +114,15 @@ export class UserInfoService {
             throw new ForbiddenException('No user info with this id')
         }
 
+        try{
         return this.prisma.userInfo.delete({
             where:{
-                id: id
+                id: userId
             }
         })
+    }catch(e){
+        console.log(e);
+        return({'error': e})
+    }
     }
 }

@@ -15,13 +15,7 @@ export declare class TicketService {
         order: number;
         problemDescription: string;
     }[]>;
-    createTicket(dto: InsertTicketDto, userId: string): Promise<{
-        title: string;
-        id: string;
-        order: number;
-        problemDescription: string;
-        userId: string;
-    }>;
+    createTicket(dto: InsertTicketDto, userId: string): Promise<void>;
     updateTicket(id: string, dto: UpdateTicketDto, userId: string): Promise<{
         title: string;
         id: string;

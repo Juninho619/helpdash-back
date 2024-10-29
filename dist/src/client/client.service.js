@@ -25,14 +25,16 @@ let ClientService = class ClientService {
                 name: 'asc'
             },
             select: {
+                id: true,
                 name: true
             }
         });
     }
-    async createClient(clientName) {
+    async createClient(dto, userId) {
         return this.prisma.client.create({
             data: {
-                name: clientName
+                userId: userId,
+                name: dto.clientName
             }
         });
     }

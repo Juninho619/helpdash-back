@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
 import { TicketService } from './ticket.service';
 import { InsertTicketDto } from './dto/insert.ticket.dto';
 import { User } from '@prisma/client';
@@ -22,11 +22,13 @@ export class TicketController {
     return this.ticketService.getMyTickets(user.id)
   }
   
+  @HttpCode(201)
   @Post('/create')
   createTicket(@Body() dto: InsertTicketDto, @GetUser() user: User){    
     return this.ticketService.createTicket(dto, user.id)
   }
 
+  @HttpCode(200)
   @Patch('/update/:id')
     updateTicket(
     @Body() dto: UpdateTicketDto,
@@ -35,7 +37,8 @@ export class TicketController {
 ) {
     return this.ticketService.updateTicket(ticketId, dto, user.id); 
 }
-  
+ 
+  @HttpCode(204)
   @Delete('/delete/:id')
   deleteTicket(@Param('id') id: string, @GetUser() user: User){
     return this.ticketService.deleteTicket(id, user.id)

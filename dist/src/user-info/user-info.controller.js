@@ -16,6 +16,8 @@ exports.UserInfoController = void 0;
 const common_1 = require("@nestjs/common");
 const user_info_service_1 = require("./user-info.service");
 const dto_1 = require("./dto");
+const auth_1 = require("../auth");
+const guard_1 = require("../auth/guard");
 let UserInfoController = class UserInfoController {
     constructor(userInfoService) {
         this.userInfoService = userInfoService;
@@ -23,48 +25,49 @@ let UserInfoController = class UserInfoController {
     getUserInfo(userId) {
         return this.userInfoService.getUserInfo(userId);
     }
-    createUserinfo(userId, dto) {
-        return this.userInfoService.fillInfoUser(userId, dto);
+    createUserinfo(user, dto) {
+        return this.userInfoService.fillInfoUser(user.id, dto);
     }
-    updateUserInfo(userId, dto) {
-        return this.userInfoService.updateUserInfo(userId, dto);
+    updateUserInfo(user, dto) {
+        return this.userInfoService.updateUserInfo(user.id, dto);
     }
-    deleteUserInfo(id, userId) {
-        return this.userInfoService.deleteUserInfo(id, userId);
+    deleteUserInfo(user) {
+        return this.userInfoService.deleteUserInfo(user.id);
     }
 };
 exports.UserInfoController = UserInfoController;
 __decorate([
-    (0, common_1.Get)('/all/:userId'),
+    (0, common_1.Get)('/all'),
     __param(0, (0, common_1.Param)('userId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], UserInfoController.prototype, "getUserInfo", null);
 __decorate([
-    (0, common_1.Post)('/create/:userId'),
-    __param(0, (0, common_1.Param)('userId')),
+    (0, common_1.Post)('/create'),
+    __param(0, (0, auth_1.GetUser)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, dto_1.InsertUserInfoDto]),
+    __metadata("design:paramtypes", [Object, dto_1.InsertUserInfoDto]),
     __metadata("design:returntype", void 0)
 ], UserInfoController.prototype, "createUserinfo", null);
 __decorate([
-    (0, common_1.Patch)('/update/:userId'),
-    __param(0, (0, common_1.Param)('userId')),
+    (0, common_1.Patch)('/update'),
+    __param(0, (0, auth_1.GetUser)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, dto_1.InsertUserInfoDto]),
+    __metadata("design:paramtypes", [Object, dto_1.InsertUserInfoDto]),
     __metadata("design:returntype", void 0)
 ], UserInfoController.prototype, "updateUserInfo", null);
 __decorate([
-    (0, common_1.Delete)('/delete/:userId'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Delete)('/delete'),
+    __param(0, (0, auth_1.GetUser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], UserInfoController.prototype, "deleteUserInfo", null);
 exports.UserInfoController = UserInfoController = __decorate([
+    (0, common_1.UseGuards)(guard_1.JwtGuard),
     (0, common_1.Controller)('user-info'),
     __metadata("design:paramtypes", [user_info_service_1.UserInfoService])
 ], UserInfoController);

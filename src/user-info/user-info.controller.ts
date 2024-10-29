@@ -1,28 +1,32 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { UserInfoService } from './user-info.service';
 import { InsertUserInfoDto } from './dto';
+import { GetUser } from 'src/auth';
+import { User } from '@prisma/client';
+import { JwtGuard } from 'src/auth/guard';
 
+@UseGuards(JwtGuard)
 @Controller('user-info')
 export class UserInfoController {
   constructor(private readonly userInfoService: UserInfoService) {}
 
-  @Get('/all/:userId')
+  @Get('/all')
   getUserInfo(@Param('userId') userId: string){
     return this.userInfoService.getUserInfo(userId)
   }
 
-  @Post('/create/:userId')
-  createUserinfo(@Param('userId') userId: string, @Body() dto: InsertUserInfoDto){
-    return this.userInfoService.fillInfoUser(userId, dto )
+  @Post('/create')
+  createUserinfo(@GetUser() user: User, @Body() dto: InsertUserInfoDto){
+    return this.userInfoService.fillInfoUser(user.id, dto )
   }
 
-  @Patch('/update/:userId')
-  updateUserInfo(@Param('userId') userId: string, @Body() dto: InsertUserInfoDto){
-    return this.userInfoService.updateUserInfo(userId, dto)
+  @Patch('/update')
+  updateUserInfo(@GetUser() user: User, @Body() dto: InsertUserInfoDto){
+    return this.userInfoService.updateUserInfo(user.id, dto)
   }
 
-  @Delete('/delete/:userId')
-  deleteUserInfo(@Param('id') id: string, userId: string){
-    return this.userInfoService.deleteUserInfo(id, userId)
+  @Delete('/delete')
+  deleteUserInfo(@GetUser() user: User){
+    return this.userInfoService.deleteUserInfo(user.id)
   }
 }

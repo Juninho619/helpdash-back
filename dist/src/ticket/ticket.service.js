@@ -52,18 +52,16 @@ let TicketService = class TicketService {
         });
     }
     async createTicket(dto, userId) {
-        if (!userId) {
-            console.log('cunt');
-        }
         await (0, checkUser_1.checkUserHasAccount)(userId);
         try {
-            return await this.prisma.ticket.create({
+            const request = await this.prisma.ticket.create({
                 data: {
                     problemDescription: dto.problemDescription,
                     title: dto.title,
                     userId: userId,
                 }
             });
+            console.log(request);
         }
         catch (error) {
             console.error('Error creating ticket:', error);
@@ -80,7 +78,7 @@ let TicketService = class TicketService {
         if (!existingTicket) {
             throw new common_1.ForbiddenException('Unexisting id or ticket');
         }
-        return this.prisma.ticket.update({
+        return await this.prisma.ticket.update({
             where: {
                 id: id,
             },
@@ -100,11 +98,12 @@ let TicketService = class TicketService {
             throw new common_1.ForbiddenException("Id doesn't exist");
         }
         else {
-            return this.prisma.ticket.delete({
+            const ticketDeletion = await this.prisma.ticket.delete({
                 where: {
                     id: id
                 }
             });
+            return ticketDeletion;
         }
     }
 };

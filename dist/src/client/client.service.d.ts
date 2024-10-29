@@ -1,11 +1,13 @@
 import { PrismaService } from 'prisma/prisma.service';
+import { CreateClientDto } from './dto/create.client.dto';
 export declare class ClientService {
     private prisma;
     constructor(prisma: PrismaService);
     getMyclients(userId: string): Promise<{
         name: string;
+        id: string;
     }[]>;
-    createClient(clientName: string): Promise<{
+    createClient(dto: CreateClientDto, userId: string): Promise<{
         name: string;
         id: string;
         userId: string;

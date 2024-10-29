@@ -19,21 +19,27 @@ let UserInfoService = class UserInfoService {
     }
     async getUserInfo(userId) {
         await (0, checkUser_1.checkUserHasAccount)(userId);
-        return this.prisma.userInfo.findFirst({
-            where: {
-                id: userId
-            },
-            select: {
-                id: true,
-                userId: true,
-                businessName: true,
-                billingEmail: true,
-                address: true,
-                city: true,
-                country: true,
-                IBAN: true
-            }
-        });
+        try {
+            return this.prisma.userInfo.findFirst({
+                where: {
+                    id: userId
+                },
+                select: {
+                    id: true,
+                    userId: true,
+                    businessName: true,
+                    billingEmail: true,
+                    address: true,
+                    city: true,
+                    country: true,
+                    IBAN: true
+                }
+            });
+        }
+        catch (e) {
+            console.log(e);
+            return ({ 'error': e });
+        }
     }
     async fillInfoUser(userId, dto) {
         (0, checkUser_1.checkUserHasAccount)(userId);
@@ -45,17 +51,23 @@ let UserInfoService = class UserInfoService {
         if (!userExists) {
             throw new common_1.ForbiddenException('User does not exist');
         }
-        return this.prisma.userInfo.create({
-            data: {
-                userId: userId,
-                businessName: dto.businessname,
-                billingEmail: dto.billingEmail,
-                address: dto.address,
-                city: dto.city,
-                country: dto.country,
-                IBAN: dto.IBAN
-            }
-        });
+        try {
+            return this.prisma.userInfo.create({
+                data: {
+                    userId: userId,
+                    businessName: dto.businessname,
+                    billingEmail: dto.billingEmail,
+                    address: dto.address,
+                    city: dto.city,
+                    country: dto.country,
+                    IBAN: dto.IBAN
+                }
+            });
+        }
+        catch (e) {
+            console.log(e);
+            return ({ 'error': e });
+        }
     }
     async updateUserInfo(userId, dto) {
         (0, checkUser_1.checkUserHasAccount)(userId);
@@ -67,36 +79,48 @@ let UserInfoService = class UserInfoService {
         if (!userExists) {
             throw new common_1.ForbiddenException('User does not exist');
         }
-        return this.prisma.userInfo.update({
-            where: {
-                userId: userId
-            },
-            data: {
-                userId: userId,
-                businessName: dto.businessname,
-                billingEmail: dto.billingEmail,
-                address: dto.address,
-                city: dto.city,
-                country: dto.country,
-                IBAN: dto.IBAN
-            }
-        });
+        try {
+            return this.prisma.userInfo.update({
+                where: {
+                    userId: userId
+                },
+                data: {
+                    userId: userId,
+                    businessName: dto.businessname,
+                    billingEmail: dto.billingEmail,
+                    address: dto.address,
+                    city: dto.city,
+                    country: dto.country,
+                    IBAN: dto.IBAN
+                }
+            });
+        }
+        catch (e) {
+            console.log(e);
+            return ({ 'error': e });
+        }
     }
-    async deleteUserInfo(userId, id) {
+    async deleteUserInfo(userId) {
         await (0, checkUser_1.checkUserHasAccount)(userId);
         const userInfoExists = await this.prisma.userInfo.findFirst({
             where: {
-                id: id
+                id: userId
             }
         });
         if (!userInfoExists) {
             throw new common_1.ForbiddenException('No user info with this id');
         }
-        return this.prisma.userInfo.delete({
-            where: {
-                id: id
-            }
-        });
+        try {
+            return this.prisma.userInfo.delete({
+                where: {
+                    id: userId
+                }
+            });
+        }
+        catch (e) {
+            console.log(e);
+            return ({ 'error': e });
+        }
     }
 };
 exports.UserInfoService = UserInfoService;

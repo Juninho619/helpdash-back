@@ -1,5 +1,6 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma.service';
+import { CreateClientDto } from './dto/create.client.dto';
 
 @Injectable()
 export class ClientService {
@@ -14,15 +15,17 @@ export class ClientService {
                 name:'asc'
             },
             select:{
+                id: true,
                 name: true
             }
         })
     }
 
-    async createClient(clientName: string){
+    async createClient(dto: CreateClientDto, userId: string){
         return this.prisma.client.create({
             data:{
-                name: clientName
+                userId: userId,
+                name: dto.clientName
             }
         })
     }

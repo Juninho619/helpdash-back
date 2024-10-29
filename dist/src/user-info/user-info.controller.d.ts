@@ -1,5 +1,6 @@
 import { UserInfoService } from './user-info.service';
 import { InsertUserInfoDto } from './dto';
+import { User } from '@prisma/client';
 export declare class UserInfoController {
     private readonly userInfoService;
     constructor(userInfoService: UserInfoService);
@@ -12,8 +13,10 @@ export declare class UserInfoController {
         address: string;
         city: string;
         country: string;
+    } | {
+        error: any;
     }>;
-    createUserinfo(userId: string, dto: InsertUserInfoDto): Promise<{
+    createUserinfo(user: User, dto: InsertUserInfoDto): Promise<{
         id: string;
         userId: string;
         billingEmail: string;
@@ -22,8 +25,10 @@ export declare class UserInfoController {
         address: string;
         city: string;
         country: string;
+    } | {
+        error: any;
     }>;
-    updateUserInfo(userId: string, dto: InsertUserInfoDto): Promise<{
+    updateUserInfo(user: User, dto: InsertUserInfoDto): Promise<{
         id: string;
         userId: string;
         billingEmail: string;
@@ -32,8 +37,10 @@ export declare class UserInfoController {
         address: string;
         city: string;
         country: string;
+    } | {
+        error: any;
     }>;
-    deleteUserInfo(id: string, userId: string): Promise<{
+    deleteUserInfo(user: User): Promise<{
         id: string;
         userId: string;
         billingEmail: string;
@@ -42,5 +49,7 @@ export declare class UserInfoController {
         address: string;
         city: string;
         country: string;
+    } | {
+        error: any;
     }>;
 }
