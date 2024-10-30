@@ -11,13 +11,13 @@ export class ClientInfoController {
     return this.clientInfoService.getClientInfo(clientId)
   }
 
-  @Post('/create')
-  fillClientInfo(@Param() clientId: string, @Body() dto: FillInfoClientDto){
+  @Post('/create/:clientid')
+  fillClientInfo(@Param('clientid') clientId: string, @Body() dto: FillInfoClientDto){
     return this.clientInfoService.fillClientInfo(clientId, dto)
   }
 
-  @Patch('/update')
-  updateClientInfo(@Param() clientId: string, @Body() dto: UpdateInfoClientDto){
+  @Patch('/update/:clientid')
+  updateClientInfo(@Param('clientid') clientId: string, @Body() dto: UpdateInfoClientDto){
     return this.clientInfoService.updateClientInfo(clientId, dto)
   }
 

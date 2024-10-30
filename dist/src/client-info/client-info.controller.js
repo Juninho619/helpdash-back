@@ -43,16 +43,16 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ClientInfoController.prototype, "getClientInfo", null);
 __decorate([
-    (0, common_1.Post)('/create'),
-    __param(0, (0, common_1.Param)()),
+    (0, common_1.Post)('/create/:clientid'),
+    __param(0, (0, common_1.Param)('clientid')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, fill_info_client_dto_1.FillInfoClientDto]),
     __metadata("design:returntype", void 0)
 ], ClientInfoController.prototype, "fillClientInfo", null);
 __decorate([
-    (0, common_1.Patch)('/update'),
-    __param(0, (0, common_1.Param)()),
+    (0, common_1.Patch)('/update/:clientid'),
+    __param(0, (0, common_1.Param)('clientid')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, update_info_client_dto_1.UpdateInfoClientDto]),

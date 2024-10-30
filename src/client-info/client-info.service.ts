@@ -56,7 +56,7 @@ export class ClientInfoService {
             },
             data:{
                 address: dto.address,
-                city: dto.address,
+                city: dto.city,
                 country: dto.country,
                 IBAN: dto.IBAN,
                 emailAddress: dto.emailAddress
